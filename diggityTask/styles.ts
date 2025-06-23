@@ -27,8 +27,8 @@ export enum Common {
 
 export enum Strings {
     DIGGITYASSESSMENT = "DIGGITY ASSESSMENT: ",
-    RECOMMENDATION = "Please see recommendations to fix vulnerabilities.",
+    RECOMMENDATION = "Please see hide exposed secrets.",
     NOTE = "NOTE: ",
     SKIPFAILBUILD = "Skip build fail is ON",
-    FAILCRITERIA = "Severity found equal or higher than: "
+    FAILCRITERIA = "Exposed Secrets found"
 }

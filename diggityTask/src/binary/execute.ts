@@ -1,7 +1,4 @@
 import { exec, ExecOptions } from 'child_process';
-import * as fs from 'fs';
-import * as path from 'path';
-import { homedir } from 'os';
 import { exit } from 'process';
 import { Styles, Common, Strings } from '../../styles'
 
@@ -11,8 +8,6 @@ export function executeCommand(
     failureMessage: string,
     skipBuildFail: string
 ): void {
-    const homeDir = homedir();
-
     // Extract the binary path (first word in command)
     const [binaryRelativePath, ...restArgs] = command.split(' ');
 
@@ -22,36 +17,17 @@ export function executeCommand(
         exit(1);
     }
 
-    // Support absolute or relative binary path
-    const binaryPath = path.isAbsolute(binaryRelativePath)
-        ? binaryRelativePath
-        : path.join(homeDir, binaryRelativePath);
+    // Use the binary name directly, let the shell resolve it from PATH
+    const binaryPath = binaryRelativePath;
 
-    // Check if the binary file exists
-    if (!fs.existsSync(binaryPath) || !fs.lstatSync(binaryPath).isFile()) {
-        console.error(`${failureMessage}: binary not found at ${binaryPath}`);
-        exit(1);
-    }
+    // Build the command string with the binary name
+    const fullCommand = [binaryPath, ...restArgs].join(' ');
 
-    // Check the permissions of the binary
-    const permissions = fs.statSync(binaryPath).mode;
-    const isExecutable = (permissions & fs.constants.S_IXUSR) !== 0;
-
-    // Set executable permission if necessary
-    if (!isExecutable) {
-        fs.chmodSync(binaryPath, '755');
-        console.log(`Executable permission set for binary at ${binaryPath}`);
-    }
-
-    // Set working directory to current directory
     const execOptions: ExecOptions = {
         cwd: '.', // or another directory if needed
         maxBuffer: 1024 * 1024 * 250, // 250MB
         shell: '/bin/bash',
     };
-
-    // Build the command string with the absolute binary path
-    const fullCommand = [binaryPath, ...restArgs].join(' ');
 
     const childProcess = exec(fullCommand, execOptions);
     childProcess.stdout?.on('data', (data) => {
