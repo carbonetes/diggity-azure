@@ -1,0 +1,64 @@
+{
+    "manifestVersion": 1,
+    "id": "diggity",
+    "name": "Diggity",
+    "version": "1.0.0",
+    "publisher": "Carbonetes",
+    "targets": [
+        {
+            "id": "Microsoft.VisualStudio.Services"
+        }
+    ],
+    "description": "Vulnerability Scanner",
+    "categories": [
+        "Azure Pipelines"
+    ],
+    "tags": [
+        "Container",
+        "Security",
+        "Scan",
+        "Docker",
+        "Image",
+        "Utility Task"
+    ],
+    "icons": {
+        "default": "assets/logo.png"
+    },
+    "files": [
+        {
+            "path": "diggityTask"
+        }
+    ],
+    "content": {
+        "details": {
+            "path": "overview.md"
+        },
+        "license": {
+            "path": "LICENSE"
+        }
+    },
+    "contributors": [
+        {
+            "name": "Sairen Christian Buerano"
+        }
+    ],
+    "contributions": [
+        {
+            "id": "diggity",
+            "type": "ms.vss-distributed-task.task",
+            "targets": [
+                "ms.vss-distributed-task.tasks"
+            ],
+            "properties": {
+                "name": "diggityTask",
+                "iconAsset": "Diggity.diggity/assets/logo.png",
+                "includesData": {
+                    "assets": [
+                        "Diggity.diggity/assets/logo.png"
+                    ]
+                }
+            }
+        }
+    ],
+    "public": true
+}

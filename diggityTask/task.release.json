@@ -1,0 +1,77 @@
+{
+    "$schema": "https://raw.githubusercontent.com/Microsoft/azure-pipelines-task-lib/master/tasks.schema.json",
+    "id": "bcb8295f-e6af-49cd-8d48-133e92716b93",
+    "name": "Diggity",
+    "friendlyName": "Diggity",
+    "description": "Vulnerability Scanner",
+    "helpUrl": "https://carbonetes.com/features",
+    "helpMarkDown": "[Learn more about this task](https://marketplace.visualstudio.com/items?itemName=Carbonetes.diggity)",
+    "category": "Utility",
+    "author": "Carbonetes",
+    "version": {
+        "Major": 1,
+        "Minor": 0,
+        "Patch": 120
+    },
+    "visibility": ["Build", "Release"],
+    "instanceNameFormat": "Analyzing image with Carbonetes Diggity",
+    "groups": [
+        {
+            "name": "required",
+            "displayName": "Required Parameters",
+            "isExpanded": true
+        },
+        {
+            "name": "optional",
+            "displayName": "Optional Parameters",
+            "isExpanded": false
+        }
+    ],
+    "inputs": [
+        {
+            "name": "token",
+            "type": "string",
+            "label": "Token",
+            "defaultValue": "",
+            "required": true,
+            "helpMarkDown": "Specify personal access token."
+        },
+        {
+            "name": "scanType",
+            "type": "string",
+            "label": "Scan Type",
+            "defaultValue": "image",
+            "required": true,
+            "helpMarkDown": "Specify if image, tar, directory."
+        },
+        {
+            "name": "scanName",
+            "type": "string",
+            "label": "Scan",
+            "defaultValue": "ubuntu",
+            "required": true,
+            "helpMarkDown": "Specify the image name, tar file path, or directory path."
+        },
+        {
+            "name": "failCriteria",
+            "type": "string",
+            "label": "Fail Criteria",
+            "defaultValue": "medium",
+            "required": true,
+            "helpMarkDown": "Select a threshold that will fail the build when equal to or above the severity found in the results. Default is medium"
+        },
+        {
+            "name": "skipBuildFail",
+            "type": "string",
+            "label": "Skip Build Fail ",
+            "defaultValue": "false",
+            "required": true,
+            "helpMarkDown": "Restrict the plugin from failing the build based on the assessment result. Default is false."
+        }
+    ],
+    "execution": {
+        "Node10": {
+            "target": "index.js"
+        }
+    }
+}
