@@ -1,0 +1,50 @@
+name: Build and Release Task Extension
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    name: Publish Azure DevOps Dev Plugin
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Install Dependencies
+      working-directory: diggityTask
+      run: |
+        npm install
+        sudo npm install -g tfx-cli semver
+
+    - name: Compile Javascript
+      working-directory: diggityTask
+      run: |
+        tsc
+        mv task.release.json task.json
+
+    - name: Bump version in Manifest
+      run: |
+        current_version=$(tfx extension show -t ${{ secrets.AzureMarketplaceToken }} --publisher Carbonetes --extension-id diggity --output json | jq '.versions | .[0].version')
+        current_version=$(if [ $current_version == "null" ]; then echo "1.0.0"; else echo $current_version; fi)
+        current_version=$(echo $current_version | sed -e 's/^"//' -e 's/"$//')
+        new_version=$(semver -i $current_version)
+        json=$(cat vss-extension.json | jq --arg v "${new_version}" '.version = $v')
+        echo $json > vss-extension.json
+
+    - name: Update Version in Task Manifest
+      run: |
+        current_version=$(tfx extension show -t ${{ secrets.AzureMarketplaceToken }} --publisher Carbonetes --extension-id diggity --output json | jq -r '.versions[0].version')
+        major=$(jq '.version.Major' diggityTask/task.json)
+        minor=$(jq '.version.Minor' diggityTask/task.json)
+        patch=$(jq '.version.Patch' diggityTask/task.json)
+        new_major=$major
+        new_minor=$minor
+        new_patch=$(expr $patch + 1)
+        updated_version="{ \"Major\": $new_major, \"Minor\": $new_minor, \"Patch\": $new_patch }"
+        jq ".version = $updated_version" diggityTask/task.json > diggityTask/task.json.tmp && mv diggityTask/task.json.tmp diggityTask/task.json
+
+    - name: Publish Plugin
+      run: |
+        tfx extension publish -t ${{ secrets.AzureMarketplaceToken }} --manifests vss-extension.json
