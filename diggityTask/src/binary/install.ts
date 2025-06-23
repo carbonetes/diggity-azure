@@ -1,10 +1,10 @@
 import { exec } from 'child_process';
+import { homedir } from 'os';
 import * as path from 'path';
 
 function executeScript(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
-        // Use the current working directory as the install directory
-        const installDir = process.cwd();
+        const installDir = homedir();
         const diggityBinary = path.join(installDir, 'diggity');
         const command = `curl -sSfL https://raw.githubusercontent.com/carbonetes/diggity/main/install.sh | bash -s -- -d "${installDir}" && chmod +x "${diggityBinary}"`;
 
