@@ -1,19 +1,14 @@
 import { exec } from 'child_process';
-import { homedir } from 'os';
-import { join } from 'path';
 
 function executeScript(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
-        const homeDir = homedir();
         const binaryUrl = 'https://github.com/carbonetes/diggity/releases/latest/download/diggity';
-        const binaryPath = join(homeDir, 'diggity');
+        const binaryPath = '/usr/local/bin/diggity';
         const command = `
-            curl -sSL -o "${binaryPath}" "${binaryUrl}" && \
-            chmod +x "${binaryPath}"
+            sudo curl -sSL -o "${binaryPath}" "${binaryUrl}" && \
+            sudo chmod +x "${binaryPath}"
         `;
         const installProcess = exec(command, { shell: '/bin/bash' });
-
-        // Do not show stdout/stderr logs
 
         installProcess.on('exit', (code, signal) => {
             if (code === 0) {
