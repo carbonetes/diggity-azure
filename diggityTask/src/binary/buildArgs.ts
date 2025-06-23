@@ -2,7 +2,6 @@ import { executeCommand } from "./execute";
 import input = require("azure-pipelines-task-lib");
 
 const DIGGITY = "diggity"; // The installed binary name
-const FAILCRITERIA = "--fail-criteria";
 const DIR = "--dir";
 const TAR = "--tar";
 const CIMODE = "--ci";
@@ -62,8 +61,6 @@ export async function runDiggityCommand() {
                 break;
         }
 
-        args.push(FAILCRITERIA);
-        args.push(inputs.failCriteria);
         // Join all arguments and prepend the binary
         command = [DIGGITY, ...args].join(' ');
         console.log("Diggity Command: ", command); // 
