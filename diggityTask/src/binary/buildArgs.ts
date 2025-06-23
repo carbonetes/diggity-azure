@@ -1,5 +1,5 @@
 import { executeCommand } from "./execute";
-import * as input from "azure-pipelines-task-lib";
+import input = require("azure-pipelines-task-lib");
 
 const DIGGITY = "diggity"; // The installed binary name
 const FAILCRITERIA = "--fail-criteria";
