@@ -3,7 +3,7 @@
     "id": "e3a1c2b4-1234-5678-9abc-def012345678",
     "name": "Diggity",
     "friendlyName": "Diggity",
-    "description": "Vulnerability Scanner",
+    "description": "Software Bill of Materials Scanner",
     "helpUrl": "https://carbonetes.com/features",
     "helpMarkDown": "[Learn more about this task](https://marketplace.visualstudio.com/items?itemName=Carbonetes.diggity)",
     "category": "Utility",
