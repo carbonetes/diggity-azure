@@ -9,7 +9,7 @@
             "id": "Microsoft.VisualStudio.Services"
         }
     ],
-    "description": "Vulnerability Scanner",
+    "description": "SBOM Scanner",
     "categories": [
         "Azure Pipelines"
     ],

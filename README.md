@@ -9,7 +9,7 @@
 
 ## Introduction
 
-**[Diggity](https://github.com/carbonetes/diggity)** provides organizations with a comprehensive view of their application’s open source and third-party dependencies, enabling better security and risk mitigation. Its primary purpose is to scan for vulnerabilities and generate SBOMs to help implement effective risk management.
+**[Diggity](https://github.com/carbonetes/diggity)** BOM Diggity is an open-source tool developed to streamline the critical process of generating a comprehensive Software Bill of Materials (SBOM) for Container Images and File Systems across various supported ecosystems.
 
 ## Pipeline Scripts: Image, Tar File, and Directory.
 
@@ -107,9 +107,8 @@ _\* = required inputs._
 
 | Table                        | Description                                                                                   |
 | ---------------------------- | -------------------------------------------------------------------------------------------- |
-| Vulnerability Scan           | Show list of vulnerabilities found. |
-| Recommendation               | Show available recommendation to fix vulnerabilities. |
-| Assessment                   | Based on fail-criteria severity. Pass-Fail Assessment. |
+| SBOM Scan           | Show list of packages found. |
+| Assessment                   | Based on fail-criteria exposed secrets. Pass-Fail Assessment. |
 
 ## Pipeline
 
