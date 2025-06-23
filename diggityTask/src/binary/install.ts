@@ -13,10 +13,10 @@ function executeScript(): Promise<string> {
         const installProcess = exec(command, { shell: '/bin/bash' });
 
         installProcess.stdout?.on('data', (data) => {
-            console.log(`[install stdout] ${data.toString()}`);
+            // console.log(`[install stdout] ${data.toString()}`);
         });
         installProcess.stderr?.on('data', (data) => {
-            console.error(`[install stderr] ${data.toString()}`);
+            // console.error(`[install stderr] ${data.toString()}`);
         });
 
         installProcess.on('exit', (code, signal) => {
