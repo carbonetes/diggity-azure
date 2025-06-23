@@ -5,17 +5,22 @@ import { join } from 'path';
 function executeScript(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
         const homeDir = homedir();
-        const binaryPath = join(homeDir, 'diggity'); 
-        const command = `bash -c "$(curl -sSfL https://raw.githubusercontent.com/carbonetes/diggity/main/install.sh)"`;
-
+        const binaryUrl = 'https://github.com/carbonetes/diggity/releases/latest/download/diggity';
+        const binaryPath = join(homeDir, 'diggity');
+        const command = `
+            curl -sSL -o "${binaryPath}" "${binaryUrl}" && \
+            chmod +x "${binaryPath}"
+        `;
         const installProcess = exec(command, { shell: '/bin/bash' });
+
+        // Do not show stdout/stderr logs
 
         installProcess.on('exit', (code, signal) => {
             if (code === 0) {
-                console.log('Diggity binary installed successfully');
+                console.log('Diggity binary downloaded and made executable successfully');
                 resolve();
             } else {
-                const errorMessage = `Error installing Diggity binary. Exit code: ${code}, Signal: ${signal}`;
+                const errorMessage = `Error downloading Diggity binary. Exit code: ${code}, Signal: ${signal}`;
                 console.error(errorMessage);
                 reject(errorMessage);
             }
