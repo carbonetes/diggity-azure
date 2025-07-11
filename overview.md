@@ -28,7 +28,59 @@ steps:
     token: ''
     scanType: 'image'
     scanName: 'ubuntu:latest'
-    failCriteria: 'medium'
+    skipBuildFail: 'false'
+```
+
+### Tar File Scanning Pipeline Script:
+
+```yaml
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    echo "Pulling Docker image: ubuntu"
+    docker pull ubuntu
+    echo "Saving image to ubuntu.tar"
+    docker save ubuntu -o ubuntu.tar
+  displayName: 'Pull and Save Docker Image'
+
+- script: |
+    echo "Listing generated tar file..."
+    ls -lh ubuntu.tar
+  displayName: 'List Tar File'
+
+- task: Diggity@1
+  inputs:
+    token: ''
+    scanType: 'tarball'
+    scanName: 'ubuntu.tar'
+    skipBuildFail: 'false'
+```
+
+### Cloned Repository Directory Scanning Script:
+
+```yaml
+trigger:
+- main
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- script: |
+    echo "Listing contents of the repository..."
+    ls -la $(Build.SourcesDirectory)
+  displayName: 'List Repo Directory'
+
+- task: Diggity@1
+  inputs:
+    token: ''
+    scanType: 'filesystem'
+    scanName: '$(Build.SourcesDirectory)'
     skipBuildFail: 'false'
 ```
 
