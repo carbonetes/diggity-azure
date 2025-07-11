@@ -28,7 +28,6 @@ steps:
     token: ''
     scanType: 'image'
     scanName: 'ubuntu:latest'
-    failCriteria: 'medium'
     skipBuildFail: 'false'
 ```
 
@@ -82,7 +81,6 @@ steps:
     token: ''
     scanType: 'filesystem'
     scanName: '$(Build.SourcesDirectory)'
-    failCriteria: 'medium'
     skipBuildFail: 'false'
 ```
 

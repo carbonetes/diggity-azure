@@ -6,7 +6,6 @@ export async function getInputs(): Promise<IInputs> {
     token: input.getInput("token", false) || "",
     scanType: input.getInput("scanType", false) || "",
     scanName: input.getInput("scanName", false) || "",
-    failCriteria: input.getInput("failCriteria", false) || "",
     skipBuildFail: input.getInput("skipBuildFail", false) || "",
   };
 
