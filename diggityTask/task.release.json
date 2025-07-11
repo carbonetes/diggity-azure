@@ -42,7 +42,7 @@
             "label": "Scan Type",
             "defaultValue": "image",
             "required": true,
-            "helpMarkDown": "Specify if image, tar, directory."
+            "helpMarkDown": "Specify if image, filesystem, tarball."
         },
         {
             "name": "scanName",
@@ -50,15 +50,7 @@
             "label": "Scan",
             "defaultValue": "ubuntu",
             "required": true,
-            "helpMarkDown": "Specify the image name, tar file path, or directory path."
-        },
-        {
-            "name": "failCriteria",
-            "type": "string",
-            "label": "Fail Criteria",
-            "defaultValue": "medium",
-            "required": true,
-            "helpMarkDown": "Select a threshold that will fail the build when equal to or above the severity found in the results. Default is medium"
+            "helpMarkDown": "Specify the image:tag, filesystem directory path, or tarball file path."
         },
         {
             "name": "skipBuildFail",

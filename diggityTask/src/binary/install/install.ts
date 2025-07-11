@@ -1,14 +1,15 @@
 import { exec } from 'child_process';
 import { homedir } from 'os';
 import * as path from 'path';
+import { constants  } from '../../../constants/constants';
 
 function executeScript(): Promise<string> {
     return new Promise<string>((resolve, reject) => {
         const installDir = homedir();
-        const diggityBinary = path.join(installDir, 'diggity');
-        const command = `curl -sSfL https://raw.githubusercontent.com/carbonetes/diggity/main/install.sh | bash -s -- -d "${installDir}" && chmod +x "${diggityBinary}"`;
+        const binaryPath = path.join(installDir, 'carbonetes-ci');
+        const command = `curl -sSfL https://raw.githubusercontent.com/carbonetes/ci/main/install.sh | bash -s -- -d "${installDir}" && chmod +x "${binaryPath}"`;
 
-        console.log(`Installing Diggity to: ${diggityBinary}`);
+        console.log(`Installing binary to: ${binaryPath}`);
 
         const installProcess = exec(command, { shell: '/bin/bash' });
 
@@ -21,10 +22,10 @@ function executeScript(): Promise<string> {
 
         installProcess.on('exit', (code, signal) => {
             if (code === 0) {
-                console.log(`Diggity binary installed successfully to: ${diggityBinary}`);
-                resolve(diggityBinary);
+                console.log(`Binary installed successfully to: ${binaryPath}`);
+                resolve(binaryPath);
             } else {
-                const errorMessage = `Error installing Diggity binary. Exit code: ${code}, Signal: ${signal}`;
+                const errorMessage = `${constants.CI_FAILURE} Error installing binary. Exit code: ${code}, Signal: ${signal}`;
                 console.error(errorMessage);
                 reject(errorMessage);
             }
