@@ -28,7 +28,6 @@ steps:
     token: ''
     scanType: 'image'
     scanName: 'ubuntu:latest'
-    failCriteria: 'medium'
     skipBuildFail: 'false'
 ```
 
@@ -57,9 +56,8 @@ steps:
 - task: Diggity@1
   inputs:
     token: ''
-    scanType: 'tar'
+    scanType: 'tarball'
     scanName: 'ubuntu.tar'
-    failCriteria: 'medium'
     skipBuildFail: 'false'
 ```
 
@@ -81,9 +79,8 @@ steps:
 - task: Diggity@1
   inputs:
     token: ''
-    scanType: 'directory'
+    scanType: 'filesystem'
     scanName: '$(Build.SourcesDirectory)'
-    failCriteria: 'medium'
     skipBuildFail: 'false'
 ```
 
@@ -96,10 +93,9 @@ steps:
 | Input Name                  | Description                                                  |
 | --------------------------- | ------------------------------------------------------------ |
 | token \*                    | Carbonetes Personal Access Token. | 
-| scanType \*                 | Select Scan Type: image, tar, or directory. | 
-| scanName \*                 | Input image name `image:tag`, tar file path, or directory path. |
-| failCriteria \*             | Input a severity that will be found at or above given severity ([unknown negligible low medium high critical]). Default: `medium`. |
-| skipBuildFail \*            | Default as false. Skip build to fail based on the assessment. |
+| scanType \*                 | Choose: image, filesystem, or tarball. | 
+| scanName \*                 | Input image name `image:tag`, filesystem directory path, or tarball file path. |
+| skipBuildFail \*            | Default false. Warning: If the value is true, it will restrict the plugin from failing the build based on the analysis result. | 
 
 _\* = required inputs._
 
@@ -107,7 +103,7 @@ _\* = required inputs._
 
 | Table                        | Description                                                                                   |
 | ---------------------------- | -------------------------------------------------------------------------------------------- |
-| SBOM Scan           | Show list of packages found. |
+| SBOM Scan                    | Show list of packages found. |
 | Assessment                   | Based on fail-criteria exposed secrets. Pass-Fail Assessment. |
 
 ## Pipeline
@@ -123,10 +119,8 @@ steps:
 - task: Diggity@1
   inputs:
     token: ''                       # Carbonetes Personal Access Token
-    scanType: 'directory'           # Select Scan Type: image, directory, tar.
-    scanName: '.'                   # Input image name, directory path, tar file path.
-    failCriteria: 'medium'          # Select a threshold that will fail the build when equal to or above the severity found in the results. 
-                                    # Select Severity: critical, high, medium, low, negligible, unknown.
+    scanType: 'filesystem'           # Select Scan Type: image, filesystem, tarball.
+    scanName: '.'                   # Input image:tag, filesystem directory path, or tarball file path.
     skipBuildFail: 'false'          # Default as false. Skip build to fail based on the assessment.
 ```
 

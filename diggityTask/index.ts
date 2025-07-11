@@ -1,24 +1,25 @@
-import { runDiggityCommand } from './src/binary/buildArgs'
-import { runScript } from './src/binary/install'
+import { setArguments } from './src/binary/arguments/setArguments';
+import { runScript  } from './src/binary/install/install';
 
 runScript()
-.catch((error) => {
-    console.error('Failed to download and execute diggity binary: ', error)
-    failBuild('Failed to download and execute diggity binary')
-})
-.then(() => {
-    runDiggity();
-})
+    .catch((error) => {
+        console.error('Failed to download and execute install shell script:', error);
+        failBuild('Failed to download and execute install shell script');
+    })
+    .then(() => {
+        runDiggity();
+    });
+
 
 function runDiggity() {
-    runDiggityCommand()
-    .catch((error) => {
-        console.error('Error executing diggity command: ', error)
-        failBuild('Error executing diggity command')
-    })
+    setArguments()
+        .catch((error) => {
+            console.error('Error executing Diggity command:', error);
+            failBuild('Failed to execute Diggity command');
+        })
 }
 
 function failBuild(errorMessage: string) {
-    console.error(errorMessage)
-    process.exit(1)
+    console.error(errorMessage);
+    process.exit(1);
 }
